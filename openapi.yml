@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Article API
+  version: 1.0.0
+paths:
+  /articles:
+    get:
+      summary: Получить список статей
+      responses:
+        '200':
+          description: Список статей успешно получен
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+
+    post:
+      summary: Создать новую статью
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        '201':
+          description: Статья успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+
+  /articles/{id}:
+    get:
+      summary: Получить статью по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Статья успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+
+    put:
+      summary: Обновить статью по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        '200':
+          description: Статья успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+
+    delete:
+      summary: Удалить статью по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Статья успешно удалена
+
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Заголовок статьи
+        description:
+          type: string
+          description: Описание статьи (необязательное)
+      required:
+        - title
